@@ -23,7 +23,12 @@ app = FastAPI(title="Patient Management System API")
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://*.vercel.app", "https://your-frontend-domain.vercel.app"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://patient-management-system-chi-blue.vercel.app",
+        # "https://*.vercel.app"  # This allows all Vercel preview deployments
+    ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
