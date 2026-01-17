@@ -18,21 +18,30 @@ from auth import (
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Patient Management System API")
-
-# CORS middleware
-# CORS middleware - Allow ALL origins (use only for testing/development)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods
-    allow_headers=["*"],  # Allow all headers
+app = FastAPI(
+    title="Patient Management System API",
+    description="A REST API for managing patient records",
+    version="1.0.0"
 )
 
-@app.get("/")
-def root():
-    return {"message": "Patient Management System API"}
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/", tags=["Root"])
+def read_root():
+    """Root endpoint - API health check"""
+    return {
+        "message": "Patient Management System API",
+        "status": "online",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
 
 # Authentication Endpoints
 @app.post("/auth/register", response_model=DoctorResponse, status_code=status.HTTP_201_CREATED)
