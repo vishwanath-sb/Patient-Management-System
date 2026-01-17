@@ -21,17 +21,13 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Patient Management System API")
 
 # CORS middleware
+# CORS middleware - Allow ALL origins (use only for testing/development)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://patient-management-system-chi-blue.vercel.app",
-        # "https://*.vercel.app"  # This allows all Vercel preview deployments
-    ],
-    allow_origin_regex=r"https://.*\.vercel\.app",
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
 )
 
 @app.get("/")
